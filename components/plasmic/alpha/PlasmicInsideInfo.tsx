@@ -484,12 +484,12 @@ function PlasmicInsideInfo__RenderFunc(props: {
                         </p.Stack>
                       </p.Stack>
                     </p.Stack>
-                    <NavGroup
-                      data-plasmic-name={"navGroup"}
-                      data-plasmic-override={overrides.navGroup}
-                      className={classNames("__wab_instance", sty.navGroup)}
-                    />
                   </p.Stack>
+                  <NavGroup
+                    data-plasmic-name={"navGroup"}
+                    data-plasmic-override={overrides.navGroup}
+                    className={classNames("__wab_instance", sty.navGroup)}
+                  />
                 </p.Stack>
               </p.Stack>
             }
@@ -528,7 +528,7 @@ const PlasmicDescendants = {
   nav: ["nav"],
   foreground: ["foreground", "h2"],
   h2: ["h2"],
-  foreground2: ["foreground2", "navGroup"],
+  foreground2: ["foreground2"],
   navGroup: ["navGroup"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;

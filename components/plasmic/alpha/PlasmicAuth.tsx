@@ -53,15 +53,18 @@ createPlasmicElementProxy;
 export type PlasmicAuth__VariantMembers = {
   isSignUpFlow: "isSignUpFlow";
   isLoading: "isLoading";
+  isError: "isError";
 };
 export type PlasmicAuth__VariantsArgs = {
   isSignUpFlow?: SingleBooleanChoiceArg<"isSignUpFlow">;
   isLoading?: SingleBooleanChoiceArg<"isLoading">;
+  isError?: SingleBooleanChoiceArg<"isError">;
 };
 type VariantPropType = keyof PlasmicAuth__VariantsArgs;
 export const PlasmicAuth__VariantProps = new Array<VariantPropType>(
   "isSignUpFlow",
-  "isLoading"
+  "isLoading",
+  "isError"
 );
 
 export type PlasmicAuth__ArgsType = {
@@ -84,6 +87,7 @@ export interface DefaultAuthProps {
   errorMessage?: React.ReactNode;
   isSignUpFlow?: SingleBooleanChoiceArg<"isSignUpFlow">;
   isLoading?: SingleBooleanChoiceArg<"isLoading">;
+  isError?: SingleBooleanChoiceArg<"isError">;
   className?: string;
 }
 
@@ -143,6 +147,12 @@ function PlasmicAuth__RenderFunc(props: {
         type: "private",
         variableType: "variant",
         initFunc: ({ $props, $state, $queries, $ctx }) => $props.isLoading
+      },
+      {
+        path: "isError",
+        type: "private",
+        variableType: "variant",
+        initFunc: ({ $props, $state, $queries, $ctx }) => $props.isError
       }
     ],
     [$props, $ctx, $refs]
@@ -170,6 +180,7 @@ function PlasmicAuth__RenderFunc(props: {
         projectcss.plasmic_tokens,
         sty.root,
         {
+          [sty.rootisError]: hasVariant($state, "isError", "isError"),
           [sty.rootisLoading]: hasVariant($state, "isLoading", "isLoading"),
           [sty.rootisSignUpFlow]: hasVariant(
             $state,
@@ -182,24 +193,33 @@ function PlasmicAuth__RenderFunc(props: {
       <div
         data-plasmic-name={"freeBox"}
         data-plasmic-override={overrides.freeBox}
-        className={classNames(projectcss.all, sty.freeBox)}
-      >
-        {p.renderPlasmicSlot({
-          defaultContents: "Error Message Here",
-          value: args.errorMessage,
-          className: classNames(sty.slotTargetErrorMessage, {
-            [sty.slotTargetErrorMessageisLoading]: hasVariant(
-              $state,
-              "isLoading",
-              "isLoading"
-            ),
-            [sty.slotTargetErrorMessageisSignUpFlow]: hasVariant(
-              $state,
-              "isSignUpFlow",
-              "isSignUpFlow"
-            )
-          })
+        className={classNames(projectcss.all, sty.freeBox, {
+          [sty.freeBoxisError]: hasVariant($state, "isError", "isError")
         })}
+      >
+        {(hasVariant($state, "isError", "isError") ? true : false)
+          ? p.renderPlasmicSlot({
+              defaultContents: "Error Message Here",
+              value: args.errorMessage,
+              className: classNames(sty.slotTargetErrorMessage, {
+                [sty.slotTargetErrorMessageisError]: hasVariant(
+                  $state,
+                  "isError",
+                  "isError"
+                ),
+                [sty.slotTargetErrorMessageisLoading]: hasVariant(
+                  $state,
+                  "isLoading",
+                  "isLoading"
+                ),
+                [sty.slotTargetErrorMessageisSignUpFlow]: hasVariant(
+                  $state,
+                  "isSignUpFlow",
+                  "isSignUpFlow"
+                )
+              })
+            })
+          : null}
       </div>
       <TextInput
         data-plasmic-name={"emailInput"}
@@ -270,8 +290,14 @@ function PlasmicAuth__RenderFunc(props: {
             $state,
             "isLoading",
             "isLoading"
+          ),
+          [sty.submitButtonisSignUpFlow]: hasVariant(
+            $state,
+            "isSignUpFlow",
+            "isSignUpFlow"
           )
         })}
+        submitsForm={true}
       >
         <div
           data-plasmic-name={"text"}
@@ -281,12 +307,19 @@ function PlasmicAuth__RenderFunc(props: {
             projectcss.__wab_text,
             sty.text,
             {
-              [sty.textisLoading]: hasVariant($state, "isLoading", "isLoading")
+              [sty.textisLoading]: hasVariant($state, "isLoading", "isLoading"),
+              [sty.textisSignUpFlow]: hasVariant(
+                $state,
+                "isSignUpFlow",
+                "isSignUpFlow"
+              )
             }
           )}
         >
           {hasVariant($state, "isLoading", "isLoading")
             ? "Loading..."
+            : hasVariant($state, "isSignUpFlow", "isSignUpFlow")
+            ? "Sign Up"
             : "Sign In"}
         </div>
       </Button>

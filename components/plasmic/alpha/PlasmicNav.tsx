@@ -188,12 +188,23 @@ function PlasmicNav__RenderFunc(props: {
             data-plasmic-name={"button"}
             data-plasmic-override={overrides.button}
             className={classNames("__wab_instance", sty.button, {
+              [sty.buttonstates_establishedUser]: hasVariant(
+                $state,
+                "states",
+                "establishedUser"
+              ),
+              [sty.buttonstates_newUser]: hasVariant(
+                $state,
+                "states",
+                "newUser"
+              ),
               [sty.buttonstates_signedInUser]: hasVariant(
                 $state,
                 "states",
                 "signedInUser"
               )
             })}
+            link={`/`}
           >
             {"Home"}
           </Button>
